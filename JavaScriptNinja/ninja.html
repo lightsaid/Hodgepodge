@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	
+	<style>
+		#results li.pass {color: green;}
+		#results li.fail {color: red;} 
+	</style>
+</head>
+<body>
+	<ul id="results"></ul>
+
+	<script>
+		// 测试就是断言结果
+		function assert(value, desc) {
+		 	var li = document.createElement("li"); 
+		 	// 测试成功与否添加对应样式
+		 	li.className = value ? "pass" : "fail"; 
+		 	li.appendChild(document.createTextNode(desc)); 
+		 	document.getElementById("results").appendChild(li); 
+		}
+
+		function report(text){
+			assert(true, text);
+		}
+
+		window.onload = function() {
+			// assert(true, "The test suite is running.");
+			// assert(false, "Fail!"); 
+		};
+
+		var label = document.createElement("script");
+		label.src = "./ninja.js?t=" + Date.now();
+		document.body.appendChild(label);
+	</script>
+</body>
+</html>

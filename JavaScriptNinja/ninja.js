@@ -5,6 +5,16 @@
  * 例子：(function(){...})();
  * */
 
+ /**
+  * 立即执行函数的几种方式
+  * (function(){}())
+  	+function(){}(); 
+	-function(){}(); 
+	!function(){}(); 
+	~function(){}(); 
+  * 
+  * */
+
 // 3.1 简单回调
 (function(){
 	function useless(ninjaCallback){
@@ -82,7 +92,127 @@
 });
 
 
-// 3.2.2 
+// 3.4 函数的实参和形参
+/**
+ *  形参是我们定义函数时所列举的变量。
+ *  实参是我们调用函数时所传递给函数的值。
+ * 
+ * 	● 函数声明。
+	● 函数表达式。
+	● 箭头函数。
+
+	函数中两个隐含的参数：arguments 和 this 
+ * */
+
+// 剩余参数(rest parameters)| 默认参数
+ (function(){
+	function fn(id, ...others){}
+	function performAction(ninja, action = "skulking"){ 
+		return ninja + " " + action; 
+	}
+ });
+
+ // arguments 别名(形参的名字)
+ (function(person){
+ 	assert(person === 'gardener', 'The person is a gardener')
+ 	assert(arguments[0]==='gardener', 'The person is a gardener')
+ 	person = 'Tom'
+ 	assert(arguments[0]==='Tom', 'The person is a Tom')
+
+ 	arguments[0] = 'Jack'
+ 	assert(person==='Jack', 'The person is a Jack')
+
+ 	// 在非严格模式下，person(别明) 和 arguments 赋值都会影响的，反之则不会
+
+ }); //('gardener');
+
+// 4.1.2
+// this 参数：函数上下文
+// this 参数的指向不仅是由定义函数的方式和位置决定的，同时还严重受到函数调用方式的影响
+~function(){
+	function fn(){ 
+		console.log(this) // window
+		const fb = function(){
+			console.log(this)
+		}
+		fb()
+	}
+	fn()
+};
+
+// 4.2 函数调用的概括
+/**
+ * 
+ * 我们可以通过 4 种方式调用一个函数，每种方式之间有一些细微差别。
+	● 作为一个函数(function)——skulk()，直接被调用。
+	● 作为一个方法(method)——ninja.skulk()，关联在一个对象上，实现面向对象编程。
+	● 作为一个构造函数(constructor)——new Ninja()，实例化一个新的对象。
+	● 通过函数的 apply 或者 call 方法——skulk.apply(ninja)或者 skulk.call(ninja)。
+ * */
+
+
+// 4.2.3 构造函数（constructor）
+// 若要通过构造函数的方式调用，需要在函数调用之前使用关键字 new。
+~function(){
+	function whatsMyContext(){ return this; } 
+
+	// 调用构造函数
+	new whatsMyContext()
+};
+
+
+// 4.2.3 构造函数的强大功能
+~function (){
+	function Ninja(){
+		this.skulk = function(){
+			return this;
+		}
+	}
+	var ninja = new Ninja();
+	var ninja2 = new Ninja();
+	assert(ninja.skulk()===ninja, "The 1st ninja is skulking")
+	assert(ninja2.skulk()===ninja2, "The 2st ninja is skulking")
+	assert(ninja===ninja2, "ninja not eq ninja2")
+
+	/**
+	 * 当通过 new 关键
+		字调用时会创建一个空的对象实例，并将其作为函数上下文（this 参数）传递给函数。
+		构造函数中在该对象上创建了一个名为 shulk 的属性并赋值为一个函数，使得该函数成
+		为新创建对象的一个方法
+	 * 
+	 * */
+
+	 /**
+	  * 
+	  * 使用关键字 new 调用函数会触发以下几个动作
+	  * 1．创建一个新的空对象。
+		2．该对象作为 this 参数传递给构造函数，从而成为构造函数的函数上下文。
+		3．新构造的对象作为 new 运算符的返回值（除了我们很快要提到的情况之外）。
+	  * 
+	  * */
+
+	  // 验证一下
+
+	  function Validate(){
+	  	console.log(this)
+	  	this.test = function(){
+	  		return this
+	  	}
+	  }
+
+	  Validate() // Window
+	  new Validate() // Validate{}
+
+	  var t1 = new Validate()
+	  var t2 = new Validate()
+
+	  assert(t1 === t1.test(), 't1 === t1.test()')
+	  assert(t2 === t2.test(), 't2 === t2.test()')
+
+}();
+
+
+
 
 
 

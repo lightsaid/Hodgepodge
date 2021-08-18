@@ -209,10 +209,75 @@
 	  assert(t1 === t1.test(), 't1 === t1.test()')
 	  assert(t2 === t2.test(), 't2 === t2.test()')
 
+};
+
+~function(){
+	var puppet = {
+		rules: false
+	}
+	function Emperor(){
+		this.rules = true
+		return puppet
+	}
+	var ep = new Emperor()
+	assert(ep === puppet, "ep === puppet")
+	assert(ep.rules === true, "ep.rules === true")
+
+	function Emperor2() {
+		this.run = function(){
+		 	return 'running'
+		}
+		// 返回这个
+		return function(){
+		 	return 'hello'
+		}
+
+		// return 1
+		// 如果是基础类型，就返回 this, 如果是对象，就返回对象
+	}
+	var ep2 = new Emperor2()
+	console.log(ep2)
+
+	// 结论
+	/*
+		如果构造函数返回一个对象，则该对象将作为整个表达式的值返回，而传入构
+		造函数的 this 将被丢弃。
+		● 但是，如果构造函数返回的是非对象类型，则忽略返回值，返回新创建的 
+		对象
+	*/
+};
+
+
+// 编写函数注意事项
+~function(){
+	"use strict"
+	function Ninja() { 
+	 //  Uncaught TypeError: Cannot set property 'skulk' of undefined
+	 this.skulk = function() { 
+	 	return this; 
+	 }; 
+	} 
+	var whatever = Ninja(); 
+};
+
+
+// 4.2.4 使用 apply 和 call 方法调用
+~function(){
+	var buttonDom = document.createElement("button")
+	buttonDom.id="test_btn";
+	var buttonText = document.createTextNode("Click Me!")
+	buttonDom.appendChild(buttonText)
+	document.body.append(buttonDom)
+
+	function Button(){
+		this.checked = false;
+		this.click = function(){
+			this.checked = true;
+			assert(button.clicked, "The button has been clicked")
+		}
+	}
+	var button = new Button()
+	var elem = document.getElementById("test_btn");
+	elem.addEventListener("click", button.click)
 }();
-
-
-
-
-
 

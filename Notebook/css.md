@@ -173,3 +173,27 @@ vertical-align: middle 只会影响行内元素或者 table-cell 元素，。比
 
 
  -- 外边距折叠： 只有上下外边距会产生折叠，左右外边距不会折叠。
+
+ -- 清除浮动
+ ```css
+ /* 版本1 */
+ .clearfix::after{
+	display: block;
+	content:" "; /* 使用 " " 解决旧版本Opera浏览器隐藏bug */
+	clear: both; 
+ }
+
+ /* 版本2 */
+ .clearfix::before,
+ .clearfix::after{
+	display: table;
+	content: " ";
+ }
+.clearfix::after{
+	clear: both;
+}
+/* 这个版本使用display: table而不是display: block。给::before和::after伪元
+素都加上这一属性，所有子元素的外边距都会包含在容器的顶部和底部之间。下面的附加栏详细
+地解释了为什么用“清除浮动和display: table”能够生效。  */
+/* 当我们不想要外边距折叠时，这个版本的清除浮动非常有用。 */
+ ```css

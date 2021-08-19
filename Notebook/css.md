@@ -133,6 +133,22 @@ box-sizing 设置值为 为border-box IE模型，
 }
 ```
 
+ -- 猫头鹰选择器
+ ```css
+.list * + *{
+ 	margin-top: 1.5em;
+ }
+ <!-- 除了，第一个li其他margin-top都有1.5em -->
+ <ul class="list">
+ 	<li>1</li>
+ 	<li>1</li>
+ 	<li>1</li>
+ 	<li>1</li>
+ </ul>
+```
+
+
+
 -- 等高解决方式（display: table-cell，Flexbox）
 
 -- 3.2.3 使用min-height和max-height

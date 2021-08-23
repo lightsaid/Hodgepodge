@@ -43,5 +43,16 @@ http://192.168.133.168:4873/
 
 - 编写组件和发布
 
+- 配置 package.json
+```json
+ "private": false, // 不许设置为fals
+ "files": [ //  设置要上传到npm库的文件目录
+    "dist"
+  ],
+```
+-- 发布
+npm publish --registry http://192.168.133.168:4873/
 
-
+-- 问题 err 没有 package.json 没有 main 配置项、或者路径不对
+-- 每次发布需要修改版本号
+-- 修改 registry 注意安装问题
